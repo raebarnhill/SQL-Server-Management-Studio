@@ -107,23 +107,198 @@ VALUES
 SELECT * FROM LIBRARY_BRANCH
 
 INSERT INTO BOOK_AUTHORS
-(Author_Name)
+(BookID,Author_Name)
 VALUES
-('Dean Koontz'),
-('Stephen King'),
-('Gerard Way'),
-('Alan Moore'),
-('Robert Kirkman'),
-('Mark Lee'),
-('Kieron Gillen'),
-('Gerry Conway'),
-('Stan Lee'),
-('Alan Moore'),
-('Nelle Harper Lee'),
-('F. Scott Fitzgerald'),
-('Gabriel Garcia Marquez'),
-('E.M. Forster'),
-('Ralph Ellisin'),
-('Miguel de Cervantes');
+(2,'Dean Koontz'),
+(3,'Stephen King'),
+(4,'Dean Koontz'),
+(5, 'Frank Miller'),
+(6,'Gerard Way'),
+(7,'Alan Moore'),
+(8,'Mark Lee'),
+(9,'Stephen King'),
+(10,'Kieron Gillen'),
+(11,'The Punisher'),
+(12,'Daredevil'),
+(13,'Alan Moore'),
+(14,'Alan Moore'),
+(15,'Nelle Harper Lee'),
+(16,'F. Scott Fitzgerald'),
+(17,'Gabriel Garcia Marquez'),
+(18,'E.M. Forster'),
+(19,'Ralph Ellisin'),
+(20,'Miguel de Cervantes');
 
 SELECT * FROM BOOK_AUTHORS
+
+INSERT INTO BOOK_COPIES
+(BookID, BranchID, Number_of_Copies)
+VALUES
+(8,1,2),
+(9,1,3),
+(6,1,5),
+(5,1,2),
+(20,1,8),
+(18,1,4),
+(11,1,5),
+(7,1,7),
+(10,1,4),
+(12,1,4),
+(13,1,2),
+(3,2,2),
+(9,2,5),
+(13,2,4),
+(14,2,8),
+(15,2,6),
+(4,2,3),
+(5,2,5),
+(6,2,10),
+(7,2,2),
+(8,2,5),
+(2,2,2),
+(2,3,5),
+(3,3,7),
+(4,3,9),
+(5,3,3),
+(6,3,2),
+(7,3,9),
+(19,3,2),
+(12,3,5),
+(18,3,5),
+(10,3,3),
+(20,4,2),
+(19,4,6),
+(18,4,3),
+(17,4,2),
+(16,4,4),
+(2,4,4),
+(5,4,3),
+(4,4,2);
+
+SELECT * FROM BOOK_COPIES
+
+INSERT INTO BOOK_LOANS
+(BookID, BranchID, CardNo, DateOut, DateDue)
+VALUES
+(20,1,12,'6/6/2019','6/12/2019'),
+(13,2,10,'12/29/2018','1/12/2019'),
+(3,2,11,'6/15/2019','6/22/2019'),
+(6,2,12,'6/14/2019','6/21/2019'),
+(12,3,2,'6/6/2019','6/12/2019'),
+(14,2,4,'6/8/2019','6/15/2019'),
+(15,2,10,'6/7/2019','6/14/2019'),
+(16,4,4,'6/6/2019','6/12/2019'),
+(20,4,5,'6/3/2019','6/10/2019'),
+(13,1,12,'6/1/2019','6/08/2019'),
+(12,3,3,'5/21/2019','5/28/2019'),
+(13,1,6,'6/15/2019','6/22/2019'),
+(9,2,11,'6/10/2019','6/17/2019'),
+(11,1,12,'6/3/2019','6/10/2019'),
+(5,4,12,'5/24/2019','6/1/2019'),
+(9,2,10,'6/10/2019','6/17/2019'),
+(6,2,10,'6/14/2019','6/21/2019'),
+(7,2,10,'6/15/2019','6/22/2019'),
+(7,1,6,'6/15/2019','6/22/2019'),
+(20,1,6,'6/15/2019','6/22/2019'),
+(18,3,3,'5/21/2019','5/28/2019'),
+(7,3,3,'5/21/2019','5/28/2019'),
+(16,4,1,'6/15/2019','6/22/2019'),
+(7,3,1,'6/15/2019','6/22/2019'),
+(2,4,1,'6/15/2019','6/22/2019'),
+(7,3,6,'6/12/2019','6/19/2019'),
+(7,3,7,'6/15/2019','6/22/2019'),
+(18,3,7,'6/15/2019','6/22/2019'),
+(4,3,9,'6/03/2019','6/18/2019'),
+(4,3,9,'6/03/2019','6/18/2019'),
+(6,2,1,'6/12/2019','6/19/2019'),
+(6,2,2,'6/15/2019','6/21/2019'),
+(6,2,3,'6/04/2019','6/11/2019'),
+(6,2,4,'6/10/2019','6/17/2019'),
+(6,2,5,'6/15/2019','6/22/2019'),
+(6,2,6,'6/02/2019','6/09/2019'),
+(6,2,6,'6/14/2019','6/21/2019'),
+(6,2,7,'6/15/2019','6/23/2019'),
+(7,2,8,'6/15/2019','6/25/2019'),
+(7,2,5,'6/15/2019','6/29/2019'),
+(7,2,1,'6/16/2019','6/22/2019'),
+(14,2,9,'6/15/2019','6/21/2019'),
+(14,2,8,'6/07/2019','6/14/2019'),
+(14,2,5,'5/26/2019','6/03/2019'),
+(14,2,6,'6/01/2019','6/07/2019'),
+(14,2,12,'6/15/2019','6/21/2019'),
+(14,2,1,'6/15/2019','6/22/2019'),
+(14,2,2,'6/15/2019','6/22/2019'),
+(2,3,5,'6/17/2019','6/22/2019'),
+(2,3,7,'6/04/2019','6/11/2019'),
+(2,3,11,'6/13/2019','6/20/2019');
+
+INSERT INTO BORROWER
+(FullName, Borrower_Address, Phone)
+VALUES
+('Abi Mohormann','25 W 1st Street',987-7657),
+('Anne Wright','2 Booker Ave',345-3456),
+('Evan Harriman','377 Magnolia',123-4567),
+('David Flood','90 Gambino Ave',678-2345),
+('Stephen Gilmore','50th Ave',222-7777),
+('Inaki Martinez','40 Cesar Chavez',000-3334),
+('Fabian Ramirez','2424 Milwakie',565-3434),
+('Tori LaDuke','92 St John''s',765-3456),
+('Mackenzie Mehrl','808 SE Division',284-4590),
+('Jensyn LaDuke','1762 SE 80th Ave',126-5432),
+('Mandy Romaine','230 Harvey Milk',100-6777),
+('Ron Chapman','29 Belmont Ave',900-3456);
+
+SELECT * FROM BORROWER
+
+
+/*-----------------
+CREATE STORED PROCEDURES 
+-----------------*/
+
+USE db_library
+GO
+CREATE PROCEDURE dbo.uspGetLostTribe @BranchID INT
+AS
+SELECT * FROM BOOK_COPIES WHERE @BranchID = 1 AND BookID = 8
+GO
+
+/*-------------------
+2.
+-----------------*/
+
+
+EXEC dbo.uspGetLostTribe @BranchID = 1 
+
+USE db_library
+GO
+CREATE PROCEDURE dbo.uspGetBookCopies @BranchID INT, @BookID INT
+AS
+SELECT * FROM BOOK_COPIES WHERE @BranchID = BranchID AND @BookID = BookID
+GO
+
+EXEC dbo.uspGetBookCopies @BranchID = 1, @BookID = 8 
+EXEC dbo.uspGetBookCopies @BranchID = 2, @BookID = 8
+EXEC dbo.uspGetBookCopies @BranchID = 3, @BookID = 8
+EXEC dbo.uspGetBookCopies @BranchID = 4, @BookID = 8
+
+/*-----------------
+3. 
+-------------------*/
+
+USE db_library
+GO
+CREATE PROCEDURE dbo.uspBorrowersNoBooks @Borrower INT, @BookID INT = NULL
+AS
+SELECT * FROM BOOK_LOANS WHERE @Borrower = CardNo AND @BookID = ISNULL(@BookID, BookID)
+GO
+
+EXEC dbo.uspBorrowersNoBooks @Borrower = 1 
+
+/*----------------------
+4.
+---------------------*/
+
+USE db_library
+GO
+CREATE PROCEDURE dbo.uspDueToday
+
