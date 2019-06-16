@@ -285,14 +285,17 @@ EXEC dbo.uspGetBookCopies @BranchID = 4, @BookID = 8
 3. 
 -------------------*/
 
-USE db_library
-GO
-CREATE PROCEDURE dbo.uspBorrowersNoBooks @Borrower INT, @BookID INT = NULL
+CREATE PROCEDURE dbo.uspBorrowersNoBooks @FullName VARCHAR(50), @BookID INT = NULL
 AS
-SELECT * FROM BOOK_LOANS WHERE @Borrower = CardNo AND @BookID = ISNULL(@BookID, BookID)
+SELECT BORROWER.FullName, BORROWER.CardNo, BOOK_LOANS.CardNo
+FROM BORROWER
+FULL OUTER JOIN BOOK_LOANS 
+ON BOOK_LOANS.CardNo = BORROWER.CardNo
+WHERE BOOK_LOANS.CardNo IS NULL AND @FullName = FullName
+ORDER BY borrower.FullName
 GO
 
-EXEC dbo.uspBorrowersNoBooks @Borrower = 1 
+EXEC dbo.uspBorrowersNoBooks @FullName = FullName, @BookID = NULL  
 
 /*----------------------
 4.
@@ -300,5 +303,79 @@ EXEC dbo.uspBorrowersNoBooks @Borrower = 1
 
 USE db_library
 GO
-CREATE PROCEDURE dbo.uspDueToday
+CREATE PROCEDURE dbo.uspDueToday 
+AS 
+SELECT LIBRARY_BRANCH.BranchID, LIBRARY_BRANCH.BranchName, BOOK_LOANS.BranchID
+FROM LIBRARY_BRANCH
+FULL OUTER JOIN BOOK_LOANS
+ON LIBRARY_BRANCH.BranchID = BOOK_LOANS.BranchID
+SELECT BOOK_LOANS.CardNo, BOOK_LOANS.DateDue, BORROWER.CardNo
+FROM BOOK_LOANS
+FULL OUTER JOIN BORROWER
+ON BOOK_LOANS.CardNo = BORROWER.CardNo
+WHERE BOOK_LOANS.DateDue = CONVERT (varchar, getdate(), 1)  
+ORDER BY FullName
+GO
 
+EXEC dbo.uspDueToday
+
+/*-------------------
+5.
+---------------*/
+
+USE db_library
+GO
+CREATE PROCEDURE db.uspBooksLoaned
+AS
+SELECT LIBRARY_BRANCH.BranchID, LIBRARY_BRANCH.BranchName, BOOK_LOANS.BranchID
+FROM LIBRARY_BRANCH
+FULL OUTER JOIN BOOK_LOANS
+ON LIBRARY_BRANCH.BranchID = BOOK_LOANS.BranchID
+WHERE BOOK_LOANS.DateOut >= 1
+ORDER BY BranchName
+GO
+
+EXEC dbo.uspBooksLoaned 
+
+/*-------
+6
+-----------*/
+
+USE db_library 
+GO
+CREATE PROCEDURE dbo.uspFivePlusLoans  
+AS
+SELECT BOOK_LOANS.CardNo, BOOK_LOANS.DateOut, BORROWER.CardNo
+FROM BOOK_LOANS
+FULL OUTER JOIN BORROWER
+ON BOOK_LOANS.CardNo = BORROWER.CardNo
+GROUP BY BOOK_LOANS.DateOut
+HAVING 
+COUNT(*) > 5
+ORDER BY COUNT(*) DESC
+
+
+SELECT * FROM BOOK_LOANS
+
+/*------------------------
+7.
+------------------------*/
+USE db_library
+GO
+CREATE PROCEDURE dbo.uspAuthor @Author NVARCHAR(50), @Branch NVARCHAR(50)
+AS
+SELECT LIBRARY_BRANCH.BranchID, LIBRARY_BRANCH.BranchName, BOOK_COPIES.BranchID
+FROM LIBRARY_BRANCH
+FULL OUTER JOIN BOOK_COPIES
+ON LIBRARY_BRANCH.BranchID = BOOK_COPIES.BranchID
+SELECT BOOK_COPIES.BookID, BOOK_COPIES.Number_of_Copies, BOOKS.BookID
+FROM BOOK_COPIES
+FULL OUTER JOIN BOOKS
+ON BOOK_COPIES.BookID = BOOKS.BookID
+SELECT BOOKS.BookID, BOOKS.Title, BOOK_AUTHORS.BookID
+FROM BOOKS
+FULL OUTER JOIN BOOK_AUTHORS
+ON BOOKS.BookID = BOOK_AUTHORS.BookID
+GO
+
+EXEC dbo.uspAuthor @Branch = 'Central', @Author = 'Stephen King'
